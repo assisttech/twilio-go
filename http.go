@@ -104,10 +104,10 @@ func parseTwilioError(resp *http.Response) error {
 		return fmt.Errorf("invalid response body: %s", string(resBody))
 	}
 	return &rest.Error{
-		Title:      rerr.Message,
-		Type:       rerr.MoreInfo,
-		ID:         strconv.FormatInt(int64(rerr.Code), 10),
-		StatusCode: resp.StatusCode,
+		Title:  rerr.Message,
+		Type:   rerr.MoreInfo,
+		ID:     strconv.FormatInt(int64(rerr.Code), 10),
+		Status: resp.StatusCode,
 	}
 }
 
@@ -244,7 +244,7 @@ func (c *Client) DeleteResource(ctx context.Context, pathPart string, sid string
 		return nil
 	}
 	rerr, ok := err.(*rest.Error)
-	if ok && rerr.StatusCode == http.StatusNotFound {
+	if ok && rerr.Status == http.StatusNotFound {
 		return nil
 	}
 	return err

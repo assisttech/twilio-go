@@ -89,6 +89,13 @@ func (ipn *IncomingNumberService) Get(ctx context.Context, sid string) (*Incomin
 	return number, err
 }
 
+// Update an IncomingPhoneNumber
+func (ipn *IncomingNumberService) Update(ctx context.Context, sid string, data url.Values) (*IncomingPhoneNumber, error) {
+	number := new(IncomingPhoneNumber)
+	err := ipn.client.UpdateResource(ctx, numbersPathPart, sid, data, ipn)
+	return number, err
+}
+
 // Release removes an IncomingPhoneNumber from your account.
 func (ipn *IncomingNumberService) Release(ctx context.Context, sid string) error {
 	return ipn.client.DeleteResource(ctx, numbersPathPart, sid)
